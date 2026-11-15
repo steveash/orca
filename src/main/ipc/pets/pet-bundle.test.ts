@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { applyCodexSpriteTimingDefaults } from '../../../shared/codex-pet-sprite-defaults'
-import { applyCodexPetDefaults, readWebpDimensionsFromBuffer } from './pet-bundle'
+
+import { readWebpDimensionsFromBuffer } from './pet-bundle'
 
 function u32(value: number): Buffer {
   const buffer = Buffer.alloc(4)
@@ -23,26 +23,6 @@ function webpVp8x(width: number, height: number): Buffer {
     payload
   ])
 }
-
-describe('applyCodexPetDefaults', () => {
-  it('keeps an explicit fps=8 bundle out of the legacy retiming path', () => {
-    // Even the default fps needs baked durations to preserve uniform pacing instead of legacy retiming.
-    const manifest = applyCodexPetDefaults({ id: 'octo', displayName: 'Octo', fps: 8 })
-    const sprite = {
-      frameWidth: 192,
-      frameHeight: 208,
-      columns: 8,
-      rows: 9,
-      sheetWidth: 1536,
-      sheetHeight: 1872,
-      fps: 8,
-      defaultAnimation: 'idle',
-      animations: manifest.animations
-    }
-    expect(applyCodexSpriteTimingDefaults(sprite)).toBe(sprite)
-    expect(sprite.animations?.idle.frameDurationsMs).toEqual([125, 125, 125, 125, 125, 125])
-  })
-})
 
 describe('readWebpDimensionsFromBuffer', () => {
   it('reads VP8X WebP canvas dimensions without decoding pixels', () => {

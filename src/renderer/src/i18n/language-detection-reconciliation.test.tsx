@@ -3,13 +3,13 @@ import { act } from 'react'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import type { GlobalSettings } from '../../../shared/global-settings-types'
-import type { UiLanguageDetection } from '../../../shared/ui-locale'
+import type { UiLanguageDetection } from '../../../shared/i18n/ui-locale'
 
 async function loadLanguageRuntime() {
   const [constants, locale, store, packs, readiness, provider, rendererI18n, onboarding] =
     await Promise.all([
       import('../../../shared/constants'),
-      import('../../../shared/ui-locale'),
+      import('../../../shared/i18n/ui-locale'),
       import('@/store'),
       import('@/store/plugins/localization/plugin-language-packs'),
       import('./language-readiness'),
